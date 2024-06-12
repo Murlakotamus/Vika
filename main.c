@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+// функция считывания с клавиатуры целых чисел в массив 
 int* getInts(int n) {
 
+  // выделяем память под массив из n целых чисел
   int* result = malloc(n);
 
   for (int i = 0; i < n; i++) {
@@ -14,15 +15,17 @@ int* getInts(int n) {
 }
 
 
-
+// функция сортировки массива
 int* sort(int n, int* intArray) {
 
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-      if (intArray[i] < intArray[j]) {
-        int temp = intArray[i];
-        intArray[i] = intArray[j];
-        intArray[j] = temp;
+  for (int i = 0; i < n; i++) {        // во внешнем цикле пробегаем по всем лементам массива, именно их мы будем сравнивать с оставшимися
+    for (int j = i + 1; j < n; j++) {  // во внутреннем цикле пробегаем по всем элементам, которые идут после элемента, с которым мы будем производить сравнения
+
+      // если i-ый элемент массива больше j-ого, меняем их местами
+      if (intArray[i] > intArray[j]) {
+        int temp = intArray[i];     // запоминаем во временную переменную i-ый элемент
+        intArray[i] = intArray[j];  // в i-ый элемент записываем j-ый элемент
+        intArray[j] = temp;         // теперь в j-ый элемент записываем то, что раньше было в i-ом элементе
       }
     }
   }
@@ -30,17 +33,20 @@ int* sort(int n, int* intArray) {
   return intArray;
 }
 
+// Отсюда начинается выполнение.
 int main(void) {
 
   int  n = 10;
-  int* integers = getInts(n);
+  int* integers = getInts(n); // вызываем функцию, где в массив считаем 10 целых чисел
 
-  integers = sort(n, integers);
+  integers = sort(n, integers); // вызываем функцию сортировки нашего массива
   printf("========\n");
 
+  //показываем, что наш массив теерь отсортирован
   for (int i = 0; i < n; i++) {
     printf ("%i \n", integers[i]);
   }
 
+  // освобождаем выделенную память
   free(integers);
 }
